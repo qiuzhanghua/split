@@ -3,28 +3,53 @@
  */
 package cn.com.taiji;
 
-import com.google.common.base.Splitter;
-import org.apache.commons.lang3.StringUtils;
-import java.util.regex.Pattern;
+import antlr.taiji.CsvLexer;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.Token;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        String  s = "abc;def\\;123";
-        System.out.println(s);
-        String[] array = s.split("\\{1};");
-        for (String  ss: array) {
-            System.out.println(ss);
+        FileInputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream("data" + File.separator + "example.csv");
+            CsvLexer lexer = new CsvLexer(CharStreams.fromStream(inputStream));
+            List<Token> list = (List<Token>) lexer.getAllTokens();
+            list.forEach(item -> System.out.println(item.getText()));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
 
-        Iterable<String> items = Splitter.on(Pattern.compile("[\\;:-]")).split(s);
-        for (String ss: items) {
-            System.out.println(ss);
-        }
-
-        String[] arr2 = StringUtils.split(s, ";:-");
-        for (String ss: arr2) {
-            System.out.println(ss);
-        }
-
+//        String  s = "abc;def\\;123";
+//        System.out.println(s);
+//        String[] array = s.split("\\{1};");
+//        for (String  ss: array) {
+//            System.out.println(ss);
+//        }
+//
+//        Iterable<String> items = Splitter.on(Pattern.compile("[\\;:-]")).split(s);
+//        for (String ss: items) {
+//            System.out.println(ss);
+//        }
+//
+//        String[] arr2 = StringUtils.split(s, ";:-");
+//        for (String ss: arr2) {
+//            System.out.println(ss);
+//        }
     }
 }

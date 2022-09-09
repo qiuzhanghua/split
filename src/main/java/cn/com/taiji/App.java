@@ -9,30 +9,17 @@ import org.antlr.v4.runtime.Token;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        FileInputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream("data" + File.separator + "example.csv");
+        try (FileInputStream inputStream = new FileInputStream("data" + File.separator + "example.csv")) {
             CsvLexer lexer = new CsvLexer(CharStreams.fromStream(inputStream));
             List<Token> list = (List<Token>) lexer.getAllTokens();
             list.forEach(item -> System.out.println(item.getText()));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
         }
 
 //        String  s = "abc;def\\;123";

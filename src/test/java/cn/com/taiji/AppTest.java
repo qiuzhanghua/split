@@ -13,7 +13,7 @@ class AppTest {
         String content = "";
         hello.HelloLexer lexer;
         List<Token> list;
-        content = "\"abc\"\"\"\"xyz\"";
+        content = "a\\bc|\\||xyz|1\\|23||";
         lexer = new hello.HelloLexer(CharStreams.fromString(content));
         list = (List<Token>) lexer.getAllTokens();
         list.forEach(item -> System.out.println(item.getText()));

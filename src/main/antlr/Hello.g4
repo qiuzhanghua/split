@@ -4,8 +4,12 @@ grammar Hello;
 package hello;
 }
 
-strs : STRING*?;
-STRING : '"' (ESC|.)*? '"';
-//fragment
-ESC : '\\\\' | '\\"';
-WS: [ \t\r\n]+ -> skip;
+code : field ('|' field)*;
+field
+    : TEXT
+    | STRING
+    |
+    ;
+
+TEXT: ~[|"]+;
+STRING:  ('\\|'|~'|')+;

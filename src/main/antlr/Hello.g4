@@ -1,8 +1,11 @@
 grammar Hello;
+
 @header {
 package hello;
 }
 
-r : 'hello' ID;
-ID: [a-z]+;
+strs : STRING*?;
+STRING : '"' (ESC|.)*? '"';
+//fragment
+ESC : '\\\\' | '\\"';
 WS: [ \t\r\n]+ -> skip;

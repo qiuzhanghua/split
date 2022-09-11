@@ -4,10 +4,21 @@ import antlr.taiji.BeijingCodeLexer;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.Token;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
 
 class AppTest {
+
+    @Test
+    void stringsTest() {
+        String content = "";
+        hello.HelloLexer lexer;
+        List<Token> list;
+        content = "\"abc\"\"\"\"xyz\"";
+        lexer = new hello.HelloLexer(CharStreams.fromString(content));
+        list = (List<Token>) lexer.getAllTokens();
+        list.forEach(item -> System.out.println(item.getText()));
+    }
+
     @Test
     void beijingCodeTest() {
         System.out.println("========================");
